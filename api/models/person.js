@@ -1,7 +1,5 @@
 const mongoose =  require('./base');
 
-
-
 const PersonSchema = mongoose.Schema({
     firstName: String,
     lastName: String

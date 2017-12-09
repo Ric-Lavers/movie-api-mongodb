@@ -1,6 +1,5 @@
 const mongoose =  require('./base');
 
-
 const Schema = mongoose.Schema;
 const ObjectId =  Schema.Types.ObjectId;
 
@@ -17,7 +16,7 @@ const movieSchema = mongoose.Schema({
     year: Number,
     star: String,
     comments: [CommentSchema],
-    director: person,// links documents
+    director: person// ,links documents
     // cast:[actor: person],
     // crew:[{person: person, role: String]
 });

@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 // Create server
 const server = express()
-
 // Movies router/controllerw
 const moviesRouter = require('./routes/movies');
+
+
 
 //set to a JSON response
 server.use(bodyParser.json()); //
