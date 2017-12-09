@@ -42,15 +42,16 @@ router.get('/:movieId', (req,res) => {
   .catch(error => res.json({error}))
 });
 router.put('/:movieId', (req,res) => {
+  console.log(req.body);
   Movie.findOneAndUpdate( {_id: req.params.movieId} ,
   req.body, { new:true })
   .then(movie => {
+    console.log("then");
     res.json(movie)
   })
-  .catch(error => res.json(error))
+  .catch(error => {console.log("catch",error);res.json(error)})
 });
 router.delete('/:movieId', (req,res) => {
-  console.log(req.body, req.method, req)
   Movie.remove({_id: req.params.movieId})
   .then(movie => {
     res.json({message: `successfully deleted movie with id:${req.params.movieId}`})
