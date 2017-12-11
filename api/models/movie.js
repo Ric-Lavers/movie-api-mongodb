@@ -7,15 +7,16 @@ const person = {
     type: ObjectId, ref: 'Person'
 }
 
-const CommentSchema =  mongoose.Schema({
-    body:String
-});
-``
+const comment = {
+  type: ObjectId, ref: 'Comment'
+}
+
+
 const movieSchema = mongoose.Schema({
     title: String,
     year: Number,
     star: String,
-    comments: [CommentSchema],
+    comments:  comment,
     director: person// ,links documents
     // cast:[actor: person],
     // crew:[{person: person, role: String]

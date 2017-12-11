@@ -1,16 +1,27 @@
 const express = require('express');
 const Movie = require('../models/movie.js')
-const router = express.Router()
+const Comment = require('../models/comment.js')
 const Person =  require('../models/person')
 const CountLog =  require('../models/countLog')
 var colors = require('colors');
+
+const router = express.Router()
+
+
+const authorize = (req,res,next)=> {
+  if ( req.user ) {
+    next()
+  }else{
+    res.status(403).end();
+  }
+}
 
 const logger = (req, res, next) => {
     CountLog.find()
     next();
 }
 
-router.get('/',[logger],(req,res) => {
+router.get('/',authorize,[logger],(req,res) => {
     Movie.find()
     .populate('director')
     .then(movies => {
@@ -25,8 +36,7 @@ router.get('/',[logger],(req,res) => {
 router.post('/', (req,res)=> {
     Person.create(req.body.director,function (err, director) {
       req.body.director = director._id
-      const id = director._id
-
+      // const id = director._id
       Movie.create(req.body)
       .then(movies => {
           res.status(201).json( movies ).end();
@@ -41,8 +51,8 @@ router.get('/:movieId', (req,res) => {
   })
   .catch(error => res.json({error}))
 });
+
 router.put('/:movieId', (req,res) => {
-  console.log(req.body);
   Movie.findOneAndUpdate( {_id: req.params.movieId} ,
   req.body, { new:true })
   .then(movie => {
