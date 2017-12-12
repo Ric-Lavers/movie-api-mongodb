@@ -22,6 +22,12 @@ server.use('/auth', require('./routes/auth'));
 server.get('/',(req,res) => {
     res.status(404).end();
 });
+
+server.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
 // Set port
 const port = 7000;
 server.listen(port, () => {

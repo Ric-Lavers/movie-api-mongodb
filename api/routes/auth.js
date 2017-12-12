@@ -8,6 +8,7 @@ router.post('/register',
 // first regester
   authMiddleware.register,
   authMiddleware.signJWTForUser
+
 // WE DONT NEED BELOW THANKS TO 'signJWTForUser'
 // // this returnes user details.
 //   (req,res,next) => {
@@ -17,13 +18,14 @@ router.post('/register',
 );
 
 // Sign in user
-router.post('/signin',
-  // middleware that allows us to sign in
+router.post('/signin', function (req,res) {
   authMiddleware.signIn,
   authMiddleware.signJWTForUser
-  // (req,res) => {
-  //   res.json({user:req.user})
-  // }
-)
+
+  // middleware that allows us to sign in
+  // authMiddleware.signIn,
+
+})
+
 
 module.exports =  router;

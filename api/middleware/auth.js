@@ -13,14 +13,18 @@ passport.serializeUser(function (user, done) {
 });
 passport.deserializeUser(function (user, done) {
     // this will close the authorization session by finding the
-    User.findById(id, function (err, user) {
+    User.findById(user.id, function (err, user) {
         done(err, user);
     });
 });
 
 function signJWTForUser(req, res) {
+  const user = req.body
+  user.id = User.find({email:user.email})
   // creates a JWT
-  const user = req.user;
+  // console.log("req.header",req.header);
+  // const user = JWT.verify(req.header);
+  console.log("user",user);
   const token = JWT.sign({
     email:user.email
   },
@@ -30,7 +34,7 @@ function signJWTForUser(req, res) {
     expiresIn: '7 days',
     subject: user.id.toString()
   });
-  console.log(token);
+  console.log("JWT",token);
   res.json({ token });
 }
 
@@ -52,11 +56,17 @@ function register(req,res,next) {
   })
 }
 
-
+function signIn(req,res,next) {
+  const theUser = User.find({email:req.email}, function (err, user) {
+        done(err, user);
+    });
+  req.user._id = theUser._id;
+  next()
+}
 
 module.exports = {
   initialize: [passport.initialize(), passport.session()],
   register,
-  signIn: passport.authenticate('local', {session: true} ),
+  signIn,
   signJWTForUser
 }

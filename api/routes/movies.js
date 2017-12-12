@@ -10,15 +10,16 @@ const router = express.Router()
 
 
 const authorize = (req,res,next)=> {
-  if ( req.user ) {
-    // jwt.verify(token, 'shhhhh', function(err, decoded) {
-    // if (err) {
-    //     err = {
-    //       name: 'JsonWebTokenError',
-    //       message: 'jwt malformed'
-    //     }
-    //   }
-    // });
+  console.log(req.headers);
+  if ( req.header.authorization ) {
+    JWT.verify(req.header.authorization, 'topsecret', function(err, decoded) {
+    if (err) {
+        err = {
+          name: 'JsonWebTokenError',
+          message: 'jwt malformed'
+        }
+      }
+    });
     next()
   }else{
     res.status(403).end();
@@ -30,7 +31,7 @@ const logger = (req, res, next) => {
     next();
 }
 
-router.get('/',authorize,[logger],(req,res) => {
+router.get('/',authorize,(req,res) => {
     Movie.find()
     .populate('director')
     .then(movies => {
