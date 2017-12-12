@@ -1,9 +1,21 @@
 const passport = require('passport')
 const User = require('../models/user');
-console.log(Object.getOwnPropertyNames(passport));
+
+
+//ADD COOKIE MIDDDLEWARE FOR cookie
+//https://github.com/peerism/peerai/compare/feat/mix-jwt-cookies
+
 passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(function (user, done) {
+  // this is store the userId instead of the whole user to provide authenication
+    done(null, user.id);
+});
+passport.deserializeUser(function (user, done) {
+    // this will close the authorization session by finding the
+    User.findById(id, function (err, user) {
+        done(err, user);
+    });
+});
 
 function register(req,res,next) {
   console.log("in authMiddleware.register");
