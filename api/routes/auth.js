@@ -7,20 +7,23 @@ const router =  new express.Router();
 router.post('/register',
 // first regester
   authMiddleware.register,
-// this returnes user details.
-  (req,res,next) => {
-// provide the response
-    res.json({user: req.user})
-  }
+  authMiddleware.signJWTForUser
+// WE DONT NEED BELOW THANKS TO 'signJWTForUser'
+// // this returnes user details.
+//   (req,res,next) => {
+// // provide the response
+//     res.json({user: req.user})
+//   }
 );
 
 // Sign in user
 router.post('/signin',
   // middleware that allows us to sign in
   authMiddleware.signIn,
-  (req,res) => {
-    res.json({user:req.user})
-  }
+  authMiddleware.signJWTForUser
+  // (req,res) => {
+  //   res.json({user:req.user})
+  // }
 )
 
 module.exports =  router;

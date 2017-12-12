@@ -4,12 +4,21 @@ const Comment = require('../models/comment.js')
 const Person =  require('../models/person')
 const CountLog =  require('../models/countLog')
 var colors = require('colors');
+const JWT = require('jsonwebtoken');
 
 const router = express.Router()
 
 
 const authorize = (req,res,next)=> {
   if ( req.user ) {
+    // jwt.verify(token, 'shhhhh', function(err, decoded) {
+    // if (err) {
+    //     err = {
+    //       name: 'JsonWebTokenError',
+    //       message: 'jwt malformed'
+    //     }
+    //   }
+    // });
     next()
   }else{
     res.status(403).end();
