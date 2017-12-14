@@ -12,7 +12,7 @@ const comment = {
 }
 
 
-const movieSchema = mongoose.Schema({
+const movieSchema = mongoose.model.Movie ||mongoose.Schema({
     title: String,
     year: Number,
     star: String,

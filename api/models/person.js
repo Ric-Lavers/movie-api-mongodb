@@ -5,6 +5,10 @@ const PersonSchema = mongoose.Schema({
     lastName: String
 });
 
-const Person = mongoose.model('Person', PersonSchema);
+PersonSchema.methods.fullName = function () {
+  return `${this.firstName} ${this.lastName}`
+}
+
+const Person = mongoose.model.Person ||mongoose.model('Person', PersonSchema);
 
 module.exports = Person;

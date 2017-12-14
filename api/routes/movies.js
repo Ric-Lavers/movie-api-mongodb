@@ -5,6 +5,7 @@ const Person =  require('../models/person')
 const CountLog =  require('../models/countLog')
 var colors = require('colors');
 const JWT = require('jsonwebtoken');
+const authMiddleware = require('../middleware/auth');
 
 const router = express.Router()
 
@@ -31,9 +32,10 @@ const logger = (req, res, next) => {
     next();
 }
 
-router.get('/',authorize,(req,res) => {
+router.get('/',authMiddleware.requireJWT,(req,res) => {
     Movie.find()
     .populate('director')
+    // .populate('crew.person')
     .then(movies => {
         // console.log(`movies are: ${movies}`)
         res.json({ movies });
