@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/api/node_modules
+/react-web/node_modules
 
 # testing
 /coverage

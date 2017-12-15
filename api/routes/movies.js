@@ -33,7 +33,7 @@ const logger = (req, res, next) => {
 }
 
 router.get('/',authMiddleware.requireJWT,(req,res) => {
-    Movie.find()
+    Movie.find()las
     .populate('director')
     // .populate('crew.person')
     .then(movies => {
